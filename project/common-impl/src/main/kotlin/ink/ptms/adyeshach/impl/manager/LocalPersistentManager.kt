@@ -35,10 +35,16 @@ open class LocalPersistentManager : DefaultManager() {
                 ex.printStackTrace()
             }
         }
+        // 关联实体合法性验证
+        activeEntity.forEach { it.verifyPassenger() }
     }
 
     override fun onSave() {
         activeEntity.forEach { entity ->
+            // 不再保存衍生单位
+            if (entity.isDerived()) {
+                return@forEach
+            }
             val json = entity.toJson()
             val jsonHash = json.digest("sha-1")
             if (hash[entity.uniqueId] != jsonHash) {

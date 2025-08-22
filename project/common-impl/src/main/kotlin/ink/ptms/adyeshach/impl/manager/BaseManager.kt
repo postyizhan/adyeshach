@@ -7,7 +7,7 @@ import ink.ptms.adyeshach.core.entity.TickService
 import ink.ptms.adyeshach.core.entity.manager.Manager
 import ink.ptms.adyeshach.core.entity.manager.ManagerService
 import ink.ptms.adyeshach.core.event.AdyeshachEntityCreateEvent
-import ink.ptms.adyeshach.core.util.safeDistance
+import ink.ptms.adyeshach.core.event.AdyeshachEntityLoadedEvent
 import ink.ptms.adyeshach.core.util.safeDistanceIgnoreY
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -26,6 +26,10 @@ import java.util.function.Predicate
  * @since 2022/6/28 00:19
  */
 open class BaseManager : Manager, ManagerService, TickService {
+
+    override fun isValid(): Boolean {
+        return true
+    }
 
     open fun getPlayers(): List<Player> {
         return onlinePlayers
@@ -123,6 +127,7 @@ open class BaseManager : Manager, ManagerService, TickService {
         } else {
             entity.manager = this
             add(entity)
+            AdyeshachEntityLoadedEvent(entity).call()
         }
         return entity
     }

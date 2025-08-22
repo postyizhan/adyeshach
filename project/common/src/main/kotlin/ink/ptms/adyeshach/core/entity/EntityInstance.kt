@@ -64,9 +64,31 @@ interface EntityInstance : EntityBase, Controllable, GenericEntity, Rideable, Vi
     var moveTarget: Location?
 
     /**
-     * 载具位置同步
+     * 是否启用客户端 ID 对应表
      */
-    var vehicleSync: Long
+    var useClientEntityMap: Boolean
+
+    /**
+     * 是否允许生成时覆盖视角
+     */
+    var isRotationFixOnSpawn: Boolean
+
+    /**
+     * 是否允许生成时刷新 Passenger
+     */
+    var isPassengerRefreshOnSpawn: Boolean
+
+    /**
+     * 是否禁用 Visible 事件
+     * 将优化大量实体生成时的性能
+     */
+    var isDisableVisibleEvent: Boolean
+
+    /**
+     * 是否在 Tick 中禁用载具检查
+     * 这将会提升性能
+     */
+    var isDisableVehicleCheckOnTick: Boolean
 
     /**
      * 取决于是否被公开的单位管理器管理
